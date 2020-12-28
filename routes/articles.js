@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const Article = require('../models').Article;
+
+
 
 /* Handler function to wrap each route. */
 function asyncHandler(cb){
@@ -25,7 +28,9 @@ router.get('/new', (req, res) => {
 
 /* POST create article. */
 router.post('/', asyncHandler(async (req, res) => {
-  res.redirect("/articles/");
+  const article = await Article.create(req.body);
+
+  res.redirect("/articles/" + article.id);
 }));
 
 /* Edit article form. */
